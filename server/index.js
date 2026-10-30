@@ -29,14 +29,8 @@ const PORT = process.env.PORT || 5000;
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 
-// Enable CORS for the Vite dev server
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  })
-);
+// Enable CORS for frontend clients
+app.use(cors());
 
 // Parse JSON bodies (up to 10 MB for large slide payloads)
 app.use(express.json({ limit: '10mb' }));
