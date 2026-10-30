@@ -1,0 +1,32 @@
+[
+  {
+    "id": "proj-default-1",
+    "title": "AI Product Pitch",
+    "createdAt": "2026-10-26T00:00:00.000Z",
+    "updatedAt": "2026-10-26T00:00:00.000Z",
+    "slides": [
+      {
+        "id": "slide-1",
+        "layout": "standard",
+        "title": "ppt-gen Engine",
+        "subtitle": "",
+        "content": [
+          "Transform raw thoughts into styled presentations."
+        ],
+        "theme": "default"
+      },
+      {
+        "id": "slide-2",
+        "layout": "standard",
+        "title": "Core Features",
+        "subtitle": "",
+        "content": [
+          "JSON-driven",
+          "Instant layout switcher",
+          "AI assisted"
+        ],
+        "theme": "default"
+      }
+    ]
+  }
+]

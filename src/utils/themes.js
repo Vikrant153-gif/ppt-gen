@@ -1,0 +1,108 @@
+/**
+ * Presentation themes — color palettes and styling definitions.
+ * Used by SlideRenderer (in-editor preview) and exportUtils (PDF/PPTX export).
+ */
+
+const THEMES = {
+  default: {
+    name: 'Minimal',
+    bg: '#ffffff',
+    cardBg: '#f7f7f7',
+    text: '#111111',
+    heading: '#000000',
+    subtitle: '#666666',
+    muted: '#999999',
+    accent: '#000000',
+    border: '#eaeaea',
+    bullet: '#000000',
+  },
+  midnight: {
+    name: 'Midnight',
+    bg: '#0f172a',
+    cardBg: '#1e293b',
+    text: '#e2e8f0',
+    heading: '#f8fafc',
+    subtitle: '#94a3b8',
+    muted: '#64748b',
+    accent: '#38bdf8',
+    border: '#334155',
+    bullet: '#38bdf8',
+  },
+  ocean: {
+    name: 'Ocean',
+    bg: '#0c4a6e',
+    cardBg: '#075985',
+    text: '#e0f2fe',
+    heading: '#f0f9ff',
+    subtitle: '#7dd3fc',
+    muted: '#38bdf8',
+    accent: '#22d3ee',
+    border: '#0369a1',
+    bullet: '#22d3ee',
+  },
+  forest: {
+    name: 'Forest',
+    bg: '#14532d',
+    cardBg: '#166534',
+    text: '#dcfce7',
+    heading: '#f0fdf4',
+    subtitle: '#86efac',
+    muted: '#4ade80',
+    accent: '#4ade80',
+    border: '#15803d',
+    bullet: '#4ade80',
+  },
+  sunset: {
+    name: 'Sunset',
+    bg: '#fff7ed',
+    cardBg: '#ffffff',
+    text: '#431407',
+    heading: '#1c0a00',
+    subtitle: '#9a3412',
+    muted: '#c2410c',
+    accent: '#ea580c',
+    border: '#fed7aa',
+    bullet: '#ea580c',
+  },
+  slate: {
+    name: 'Slate',
+    bg: '#1e293b',
+    cardBg: '#334155',
+    text: '#cbd5e1',
+    heading: '#f1f5f9',
+    subtitle: '#94a3b8',
+    muted: '#64748b',
+    accent: '#a78bfa',
+    border: '#475569',
+    bullet: '#a78bfa',
+  },
+  lavender: {
+    name: 'Lavender',
+    bg: '#faf5ff',
+    cardBg: '#ffffff',
+    text: '#3b0764',
+    heading: '#1e002e',
+    subtitle: '#7e22ce',
+    muted: '#a855f7',
+    accent: '#9333ea',
+    border: '#e9d5ff',
+    bullet: '#9333ea',
+  },
+  ember: {
+    name: 'Ember',
+    bg: '#1c1917',
+    cardBg: '#292524',
+    text: '#e7e5e4',
+    heading: '#fafaf9',
+    subtitle: '#a8a29e',
+    muted: '#78716c',
+    accent: '#f97316',
+    border: '#44403c',
+    bullet: '#f97316',
+  },
+};
+
+export const getTheme = (themeKey) => THEMES[themeKey] || THEMES.default;
+export const getThemeList = () =>
+  Object.entries(THEMES).map(([key, t]) => ({ key, name: t.name, bg: t.bg, accent: t.accent, heading: t.heading }));
+export default THEMES;
