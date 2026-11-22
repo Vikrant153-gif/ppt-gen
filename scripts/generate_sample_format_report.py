@@ -464,8 +464,11 @@ def build_report():
     figs = [
         ("Figure 3.1: Three-tier architecture of PPT-GEN", "7"),
         ("Figure 3.2: AI-driven presentation generation pipeline", "10"),
-        ("Figure 5.1: Average presentation authoring time", "15"),
-        ("Figure 5.2: Benchmark vs. actual generation latency across sample topics", "14")
+        ("Figure 4.1: PPT-GEN Studio 16:9 aspect-locked split canvas editor", "12"),
+        ("Figure 4.2: Frontend suite: (a) Dashboard and (b) Presenter mode", "13"),
+        ("Figure 5.1: Benchmark vs. actual generation latency across sample topics", "14"),
+        ("Figure 5.2: Average presentation authoring time", "15"),
+        ("Figure 5.3: Functional verification: (a) AI intake and (b) Export engine", "15")
     ]
     for name, pg in figs:
         p_item = doc.add_paragraph()
@@ -1006,9 +1009,22 @@ def build_report():
 
     add_sec_head("4.3 Frontend Implementation")
     doc.add_paragraph(
-        "The frontend is a React 19 single-page application built with Vite. An authentication context manages the token and user profile, "
-        "and `<ProtectedRoute>` wrappers redirect unauthenticated visitors to `/login`. Table 4.2 summarizes the main pages and components."
+        "The frontend is a React 19 single-page application built with Vite 8.2, designed around an aspect-locked 16:9 canvas editor that "
+        "eliminates spatial layout collisions. The interface enforces relative flexbox constraints: a 55% left column for hierarchically formatted "
+        "text and factual bullet points, and a 42% right card rendering contextual high-resolution photography retrieved from Unsplash with "
+        "legal photographer attribution. As shown in Figure 4.1, users can edit slide contents inline, navigate deck thumbnails, toggle visual "
+        "themes, and trigger instant presentation and export actions."
     )
+
+    add_fig_image('extracted_assets/figures/fig_4_1.png', "Figure 4.1: PPT-GEN Studio 16:9 aspect-locked split canvas editor with Unsplash media integration", width=Inches(5.0))
+
+    doc.add_page_break()
+
+    # =========================================================================
+    # PAGE 20 (Page 13): Table 4.2, Figure 4.2, 4.4 & 4.5
+    # =========================================================================
+    print("Page 20 (Page 13): Table 4.2, Figure 4.2, 4.4 & 4.5...")
+    doc.add_paragraph("Table 4.2 summarizes the primary frontend modules, and Figure 4.2 illustrates the projects dashboard and Phase 4 fullscreen presenter mode.")
 
     # Table 4.2: Frontend
     t_42 = doc.add_table(rows=6, cols=2)
@@ -1020,55 +1036,43 @@ def build_report():
 
     t42_hdr = ["Page / Component", "Description"]
     t42_data = [
-        ["Landing.jsx", "Public presentation showcase, feature summary, export badges, and contact mailto links."],
-        ["Login / Signup.jsx", "Authentication dialogs with input validation; saves returned JWT in client state."],
-        ["Projects.jsx", "Studio dashboard displaying user deck cards, slide counts, timestamps, and AI generation modal."],
-        ["Editor.jsx / SlideRenderer", "16:9 aspect-locked canvas with 42% split Unsplash cards, photographer credits, and thumbnail bar."],
-        ["PresentMode.jsx / ExportModal", "Phase 4 fullscreen presenter with auto-hiding HUD, and in-browser 5-format compilation dialog."]
+        ["Landing.jsx", "Public presentation showcase, feature summary, export badges, and demo CTAs."],
+        ["Login / Signup.jsx", "Authentication dialogs with validation; stores JWT in client-side state."],
+        ["Projects.jsx", "Studio dashboard with user deck cards, slide counts, and AI generation modal."],
+        ["Editor.jsx / SlideRenderer", "16:9 aspect-locked canvas with 42% split Unsplash cards and thumbnail navigation."],
+        ["PresentMode.jsx / ExportModal", "Phase 4 fullscreen presenter with auto-hiding HUD, and in-browser 5-format compiler."]
     ]
     for col_idx, text in enumerate(t42_hdr):
         c = t_42.cell(0, col_idx); c.width = t42_widths[col_idx]
-        set_cell_shd(c, TBL_HEADER_BG); set_cell_pad(c, 35, 35, 60, 60)
+        set_cell_shd(c, TBL_HEADER_BG); set_cell_pad(c, 25, 25, 50, 50)
         p = c.paragraphs[0]; p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         r = p.add_run(text); r.bold = True; r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
     for row_idx, r_data in enumerate(t42_data):
         for col_idx, val in enumerate(r_data):
             c = t_42.cell(row_idx + 1, col_idx); c.width = t42_widths[col_idx]
-            set_cell_pad(c, 30, 30, 60, 60)
-            p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.1; p.paragraph_format.space_after = Pt(1)
+            set_cell_pad(c, 20, 20, 50, 50)
+            p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.05; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0: r.bold = True
     add_caption("Table 4.2: Frontend pages and components")
 
-    doc.add_paragraph(
-        "Progress indicators and slide layout transitions utilize CSS transitions and SVG calculations without external charting bloat. "
-        "The linear progress indicator in Present Mode computes progress as (activeSlide + 1) / totalSlides, providing immediate visual feedback."
-    )
+    add_fig_image('extracted_assets/figures/fig_4_2.png', "Figure 4.2: Frontend suite: (a) Dashboard and (b) Presenter mode", width=Inches(5.4))
 
-    doc.add_page_break()
-
-    # =========================================================================
-    # PAGE 20 (Page 13): 4.4 Security & 4.5 Setup
-    # =========================================================================
-    print("Page 20 (Page 13): 4.4 Security & 4.5 Setup...")
     add_sec_head("4.4 Security Considerations")
-
-    add_bullet("Password protection:", "Passwords are salted and hashed with bcryptjs (10 rounds) and are never stored in plaintext or exposed in API payloads.")
-    add_bullet("Token-based access control:", "All deck operations require a valid cryptographically signed JWT; queries filter by the authenticated userId to ensure tenant isolation.")
-    add_bullet("Secret management:", "Database connection strings, JWT secret keys, Gemini API tokens, and Unsplash credentials reside in server-side .env files excluded from Git tracking.")
-    add_bullet("CORS and sanitization:", "CORS restricts cross-origin abuse, while backend schemas validate slide types, titles, and layout keys before saving to MongoDB Atlas.")
-    add_bullet("Client-side export privacy:", "PDF, PPTX, DOCX, and image compilation occurs 100% in-browser; presentation content never passes through third-party rendering clouds.")
+    add_bullet("Password protection:", "Passwords are salted and hashed with bcryptjs (10 rounds) and are never exposed in API payloads.")
+    add_bullet("Token-based access control:", "All deck operations require a valid signed JWT; queries filter by authenticated userId for tenant isolation.")
+    add_bullet("Secret management:", "Database URIs, JWT secrets, Gemini API keys, and Unsplash credentials reside in server-side .env files.")
+    add_bullet("CORS and sanitization:", "CORS restricts cross-origin abuse, while backend schemas validate slide fields before database writes.")
+    add_bullet("Client-side export privacy:", "Document compilation occurs 100% in-browser; slide content never passes through third-party rendering clouds.")
 
     add_sec_head("4.5 Setup and Execution")
     doc.add_paragraph(
-        "To run PPT-GEN locally, the MongoDB Atlas connection URI, JWT secret, Gemini API key, and Unsplash access key are placed in `server/.env`. "
-        "Dependencies for both packages are installed via npm. The backend server runs on port 5000 (`node index.js`) and the Vite development "
-        "server serves the frontend on `http://localhost:5173` (`npm run dev`)."
+        "To run PPT-GEN locally, MongoDB Atlas URI, JWT secret, Gemini API key, and Unsplash access key are placed in `server/.env`. "
+        "The backend server runs on port 5000 (`node index.js`) and Vite serves the frontend on `http://localhost:5173` (`npm run dev`)."
     )
     doc.add_paragraph(
-        "For cloud production deployment, the backend is deployed as a Web Service on Render Cloud Platform (`https://ppt-gen-backend-doal.onrender.com`), "
-        "configured with environment variables and health check routes (`/api/health`). The React frontend is deployed to Vercel Global Edge Network "
-        "(`https://ppt-gen-two.vercel.app`), configured with `vercel.json` SPA rewrite rules routing all paths to `/index.html` to support client-side routing on reload."
+        "For cloud deployment, the backend runs on Render (`https://ppt-gen-backend-doal.onrender.com`), with health check routes (`/api/health`). "
+        "The React frontend is deployed to Vercel Edge (`https://ppt-gen-two.vercel.app`), configured with `vercel.json` SPA rewrites routing all paths to `/index.html`."
     )
 
     doc.add_page_break()
@@ -1126,7 +1130,7 @@ def build_report():
             if col_idx == 0 or col_idx == 4: r.bold = True
     add_caption("Table 5.1: AI multimodal presentation generation benchmark")
 
-    add_fig_image('extracted_assets/figures/fig_5_2.png', "Figure 5.2: Benchmark vs. actual generation latency across sample topics", width=Inches(4.4))
+    add_fig_image('extracted_assets/figures/fig_5_2.png', "Figure 5.1: Benchmark vs. actual generation latency across sample topics", width=Inches(4.4))
 
     doc.add_page_break()
 
@@ -1145,18 +1149,21 @@ def build_report():
     add_sec_head("5.3 Usability Evaluation")
     doc.add_paragraph(
         "Authoring speed was compared between a traditional search-and-format application and PPT-GEN’s prompt-driven generation. "
-        "Average deck creation time fell from 94.2 seconds to 11.4 seconds, an 87.9% reduction in user effort (Figure 5.1). "
+        "Average deck creation time fell from 94.2 seconds to 11.4 seconds, an 87.9% reduction in user effort (Figure 5.2). "
         "The dramatic improvement stems from replacing manual coordinate drag-and-drop, bullet formatting, and photo searching "
         "with an automated prompt-to-schema pipeline followed by quick inline review."
     )
 
-    add_fig_image('extracted_assets/figures/fig_5_1.png', "Figure 5.1: Average presentation authoring time", width=Inches(4.0))
+    add_fig_image('extracted_assets/figures/fig_5_1.png', "Figure 5.2: Average presentation authoring time", width=Inches(3.8))
 
     add_sec_head("5.4 Functional Verification")
     doc.add_paragraph(
-        "The REST API was validated via automated test scripts and manual Postman walkthroughs. Table 5.2 lists the core scenarios "
-        "and observed system responses."
+        "The RESTful API and client-side processing pipeline were validated via automated test scripts and interactive user walkthroughs. "
+        "End-to-end verification confirmed both robust natural language topic intake (Figure 5.3a) and successful in-browser rasterization across "
+        "five distinct file formats (Figure 5.3b) without server rendering dependencies."
     )
+
+    add_fig_image('extracted_assets/figures/fig_5_3.png', "Figure 5.3: Functional verification: (a) AI intake and (b) Export engine", width=Inches(5.4))
 
     doc.add_page_break()
 
