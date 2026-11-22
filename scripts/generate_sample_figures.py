@@ -71,9 +71,9 @@ def create_fig_3_1():
     ax.text(0.685, 0.32, "Prompt / API\nPromise.all", ha='center', va='center', fontsize=7, color="#475569")
 
     plt.tight_layout()
-    plt.savefig('extracted_assets/figures/fig_3_1.png', dpi=300, bbox_inches='tight')
+    plt.savefig('extracted_assets/figures/fig_3_1.png', dpi=600, bbox_inches='tight')
     plt.close()
-    print("Created fig_3_1.png")
+    print("Created fig_3_1.png at 600 DPI")
 
 # 2. Figure 3.2: AI Generation Pipeline
 def create_fig_3_2():
@@ -102,13 +102,13 @@ def create_fig_3_2():
                         arrowprops=dict(arrowstyle="-|>", color="#64748b", lw=1.2, mutation_scale=10))
 
     plt.tight_layout()
-    plt.savefig('extracted_assets/figures/fig_3_2.png', dpi=300, bbox_inches='tight')
+    plt.savefig('extracted_assets/figures/fig_3_2.png', dpi=600, bbox_inches='tight')
     plt.close()
-    print("Created fig_3_2.png")
+    print("Created fig_3_2.png at 600 DPI")
 
 # 3. Figure 5.1: Average Deck-Creation Time Chart
 def create_fig_5_1():
-    fig, ax = plt.subplots(figsize=(5, 3.2), dpi=300)
+    fig, ax = plt.subplots(figsize=(5, 3.2), dpi=600)
     
     categories = ['Traditional manual\nauthoring apps', 'PPT-GEN\n(AI generation)']
     values = [94.2, 11.4]
@@ -131,13 +131,13 @@ def create_fig_5_1():
                     ha='center', va='bottom', fontsize=8, fontname='Times New Roman')
 
     plt.tight_layout()
-    plt.savefig('extracted_assets/figures/fig_5_1.png', dpi=300, bbox_inches='tight')
+    plt.savefig('extracted_assets/figures/fig_5_1.png', dpi=600, bbox_inches='tight')
     plt.close()
-    print("Created fig_5_1.png")
+    print("Created fig_5_1.png at 600 DPI")
 
 # 4. Figure 5.2: Latency Benchmarks Chart
 def create_fig_5_2():
-    fig, ax = plt.subplots(figsize=(6, 3.4), dpi=300)
+    fig, ax = plt.subplots(figsize=(6, 3.4), dpi=600)
     
     topics = ['AI History\n(8 slides)', 'Quantum Comp.\n(8 slides)', 'Deep Space\n(8 slides)', 'Climate Tech\n(8 slides)']
     x = range(len(topics))
@@ -159,9 +159,9 @@ def create_fig_5_2():
     ax.tick_params(axis='both', which='major', labelsize=8)
 
     plt.tight_layout()
-    plt.savefig('extracted_assets/figures/fig_5_2.png', dpi=300, bbox_inches='tight')
+    plt.savefig('extracted_assets/figures/fig_5_2.png', dpi=600, bbox_inches='tight')
     plt.close()
-    print("Created fig_5_2.png")
+    print("Created fig_5_2.png at 600 DPI")
 
 create_fig_3_1()
 create_fig_3_2()

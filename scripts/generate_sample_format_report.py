@@ -1139,31 +1139,30 @@ def build_report():
     # =========================================================================
     print("Page 22 (Page 15): Results text, 5.3 Usability & 5.4 Verification...")
 
-    doc.add_paragraph(
-        "Google Gemini 3 Flash Preview achieved a 100% JSON schema adherence rate, with 30 out of 30 generated presentations returning valid "
+    p_r = doc.add_paragraph(
+        "Google Gemini 3 Flash Preview achieved a 100% JSON schema adherence rate across all 30 test decks, returning valid "
         "structural arrays with required titles, subtitles, and factual bullets formatted as `**Key Concept:** Description`. "
-        "The overall average generation latency of 1.92 seconds easily surpassed the SLA target of 2.50 seconds. Parallel Unsplash queries "
-        "resolved in an average of 1.14 seconds, enabling complete 8-slide decks with HD photos to render in ~11 seconds total."
+        "The average generation latency of 1.92s beat the SLA limit (2.50s), while Unsplash resolved in ~1.14s."
     )
+    p_r.paragraph_format.line_spacing = 1.1; p_r.paragraph_format.space_after = Pt(2)
 
     add_sec_head("5.3 Usability Evaluation")
-    doc.add_paragraph(
-        "Authoring speed was compared between a traditional search-and-format application and PPT-GEN’s prompt-driven generation. "
-        "Average deck creation time fell from 94.2 seconds to 11.4 seconds, an 87.9% reduction in user effort (Figure 5.2). "
-        "The dramatic improvement stems from replacing manual coordinate drag-and-drop, bullet formatting, and photo searching "
-        "with an automated prompt-to-schema pipeline followed by quick inline review."
+    p_u = doc.add_paragraph(
+        "Authoring speed was compared between manual tools and PPT-GEN. Average creation time fell from 94.2s to 11.4s, an 87.9% "
+        "effort reduction (Figure 5.2) by replacing manual coordinate dragging and photo search with prompt synthesis."
     )
+    p_u.paragraph_format.line_spacing = 1.1; p_u.paragraph_format.space_after = Pt(2)
 
-    add_fig_image('extracted_assets/figures/fig_5_1.png', "Figure 5.2: Average presentation authoring time", width=Inches(3.8))
+    add_fig_image('extracted_assets/figures/fig_5_1.png', "Figure 5.2: Average presentation authoring time", width=Inches(2.7))
 
     add_sec_head("5.4 Functional Verification")
-    doc.add_paragraph(
-        "The RESTful API and client-side processing pipeline were validated via automated test scripts and interactive user walkthroughs. "
-        "End-to-end verification confirmed both robust natural language topic intake (Figure 5.3a) and successful in-browser rasterization across "
-        "five distinct file formats (Figure 5.3b) without server rendering dependencies."
+    p_v = doc.add_paragraph(
+        "End-to-end testing confirmed robust natural language topic intake (Figure 5.3a) and client-side multi-format export "
+        "compilation (Figure 5.3b) across five formats with zero server rendering overhead."
     )
+    p_v.paragraph_format.line_spacing = 1.1; p_v.paragraph_format.space_after = Pt(2)
 
-    add_fig_image('extracted_assets/figures/fig_5_3.png', "Figure 5.3: Functional verification: (a) AI intake and (b) Export engine", width=Inches(5.4))
+    add_fig_image('extracted_assets/figures/fig_5_3.png', "Figure 5.3: Functional verification: (a) AI intake and (b) Export engine", width=Inches(4.2))
 
     doc.add_page_break()
 
