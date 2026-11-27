@@ -36,7 +36,7 @@ def build_report():
     style_normal.paragraph_format.line_spacing = 1.25
     style_normal.paragraph_format.space_after = Pt(3.5)
     style_normal.paragraph_format.space_before = Pt(0)
-    style_normal.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    style_normal.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
     # ── Helper Functions ─────────────────────────────────────────────────────
     def set_cell_shd(cell, color_hex):
@@ -104,7 +104,7 @@ def build_report():
         p.paragraph_format.space_before = Pt(1)
         p.paragraph_format.space_after = Pt(2.5)
         p.paragraph_format.line_spacing = 1.2
-        p.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        p.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
         run_b = p.add_run(bold_prefix)
         run_b.bold = True
         run_b.font.name = 'Times New Roman'
@@ -1276,7 +1276,7 @@ def build_report():
         p_ref.paragraph_format.space_before = Pt(2.5)
         p_ref.paragraph_format.space_after = Pt(3.5)
         p_ref.paragraph_format.line_spacing = 1.15
-        p_ref.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        p_ref.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
         r = p_ref.add_run(ref)
         r.font.name = 'Times New Roman'
         r.font.size = Pt(10)
