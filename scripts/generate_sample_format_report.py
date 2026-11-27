@@ -63,6 +63,29 @@ def build_report():
         tblPr.append(borders)
 
     def add_chapter_head(title_text):
+        if title_text.startswith("CHAPTER ") and ": " in title_text:
+            chap_label, chap_name = title_text.split(": ", 1)
+            p1 = doc.add_paragraph()
+            p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p1.paragraph_format.space_before = Pt(2)
+            p1.paragraph_format.space_after = Pt(2)
+            r1 = p1.add_run(chap_label)
+            r1.bold = True
+            r1.font.name = 'Times New Roman'
+            r1.font.size = Pt(14)
+            r1.font.color.rgb = COLOR_BLACK
+
+            p2 = doc.add_paragraph()
+            p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p2.paragraph_format.space_before = Pt(0)
+            p2.paragraph_format.space_after = Pt(10)
+            r2 = p2.add_run(chap_name)
+            r2.bold = True
+            r2.font.name = 'Times New Roman'
+            r2.font.size = Pt(14)
+            r2.font.color.rgb = COLOR_BLACK
+            return p2
+
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.space_before = Pt(4)
@@ -436,16 +459,34 @@ def build_report():
     ]
 
     for title, pg, is_b in toc_rows:
-        p_t = doc.add_paragraph()
-        p_t.paragraph_format.line_spacing = 1.15
-        p_t.paragraph_format.space_before = Pt(1)
-        p_t.paragraph_format.space_after = Pt(2)
-        dots_count = 78 - len(title) - len(pg)
-        dots = " ." * (dots_count // 2) if dots_count > 4 else " ... "
-        line_str = f"{title}{dots} {pg}"
-        r = p_t.add_run(line_str)
-        r.font.name = 'Times New Roman'; r.font.size = Pt(10)
-        if is_b: r.bold = True
+        if title.startswith("CHAPTER ") and ": " in title:
+            chap_label, chap_name = title.split(": ", 1)
+            p_c = doc.add_paragraph()
+            p_c.paragraph_format.line_spacing = 1.1
+            p_c.paragraph_format.space_before = Pt(2)
+            p_c.paragraph_format.space_after = Pt(0)
+            rc = p_c.add_run(chap_label)
+            rc.font.name = 'Times New Roman'; rc.font.size = Pt(10); rc.bold = True
+
+            p_t = doc.add_paragraph()
+            p_t.paragraph_format.line_spacing = 1.1
+            p_t.paragraph_format.space_before = Pt(0)
+            p_t.paragraph_format.space_after = Pt(1.5)
+            dots_count = 78 - len(chap_name) - len(pg)
+            dots = " ." * (dots_count // 2) if dots_count > 4 else " ... "
+            r = p_t.add_run(f"{chap_name}{dots} {pg}")
+            r.font.name = 'Times New Roman'; r.font.size = Pt(10); r.bold = True
+        else:
+            p_t = doc.add_paragraph()
+            p_t.paragraph_format.line_spacing = 1.1
+            p_t.paragraph_format.space_before = Pt(0.5)
+            p_t.paragraph_format.space_after = Pt(1.5)
+            dots_count = 78 - len(title) - len(pg)
+            dots = " ." * (dots_count // 2) if dots_count > 4 else " ... "
+            line_str = f"{title}{dots} {pg}"
+            r = p_t.add_run(line_str)
+            r.font.name = 'Times New Roman'; r.font.size = Pt(10)
+            if is_b: r.bold = True
 
     doc.add_page_break()
 
@@ -940,35 +981,48 @@ def build_report():
     add_chapter_head("CHAPTER 4: IMPLEMENTATION")
     add_sec_head("4.1 System Design and Requirements")
 
-    doc.add_paragraph(
+    p41 = doc.add_paragraph(
         "The application was developed and tested in a decoupled full-stack web environment. The project is organized into two independent "
         "packages: a server directory containing the Express backend microservice, and a client directory containing the React 19 frontend. "
         "The backend exposes RESTful endpoints that coordinate the React client, the MongoDB database, and the external AI services."
     )
-    doc.add_paragraph("Functional requirements:")
-    add_bullet("User Management:", "Register, log in, and manage account credentials with secure JWT sessions.")
-    add_bullet("AI Slide Synthesis:", "Generate complete multi-slide decks from natural language topic prompts with structured factual bullet points.")
-    add_bullet("Concurrent Media:", "Automatically fetch high-resolution Unsplash landscape photos with required author attribution.")
-    add_bullet("Deck Management:", "View, search, edit, rename, and delete presentation projects on the studio dashboard.")
-    add_bullet("Phase 4 Present Mode:", "Deliver fullscreen presentations with keyboard navigation, auto-hiding HUD, and progress pacing.")
+    p41.paragraph_format.line_spacing = 1.12; p41.paragraph_format.space_after = Pt(2)
+    p_fr = doc.add_paragraph("Functional requirements:")
+    p_fr.paragraph_format.space_after = Pt(1.5)
+    for bp, bt in [
+        ("User Management:", "Register, log in, and manage account credentials with secure JWT sessions."),
+        ("AI Slide Synthesis:", "Generate complete multi-slide decks from natural language topic prompts with structured factual bullet points."),
+        ("Concurrent Media:", "Automatically fetch high-resolution Unsplash landscape photos with required author attribution."),
+        ("Deck Management:", "View, search, edit, rename, and delete presentation projects on the studio dashboard."),
+        ("Phase 4 Present Mode:", "Deliver fullscreen presentations with keyboard navigation, auto-hiding HUD, and progress pacing.")
+    ]:
+        pb = add_bullet(bp, bt)
+        pb.paragraph_format.line_spacing = 1.1; pb.paragraph_format.space_after = Pt(1)
 
-    doc.add_paragraph("Non-functional requirements:")
-    add_bullet("Security:", "Salted password hashing (10 rounds), token-protected API endpoints, and server-side secret management.")
-    add_bullet("Performance:", "Sub-2s LLM generation, sub-1.2s parallel media retrieval, and indexed database queries for fast response times.")
-    add_bullet("Usability:", "Minimalist monochrome interface usable across desktop and mobile screens, eliminating blank-canvas friction.")
-    add_bullet("Maintainability:", "Clean modular separation across routes, controllers, middleware, and React components.")
+    p_nfr = doc.add_paragraph("Non-functional requirements:")
+    p_nfr.paragraph_format.space_before = Pt(3); p_nfr.paragraph_format.space_after = Pt(1.5)
+    for bp, bt in [
+        ("Security:", "Salted password hashing (10 rounds), token-protected API endpoints, and server-side secret management."),
+        ("Performance:", "Sub-2s LLM generation, sub-1.2s parallel media retrieval, and indexed database queries for fast response times."),
+        ("Usability:", "Minimalist monochrome interface usable across desktop and mobile screens, eliminating blank-canvas friction."),
+        ("Maintainability:", "Clean modular separation across routes, controllers, middleware, and React components.")
+    ]:
+        pb = add_bullet(bp, bt)
+        pb.paragraph_format.line_spacing = 1.1; pb.paragraph_format.space_after = Pt(1)
 
     add_sec_head("4.2 Backend Implementation")
-    doc.add_paragraph(
+    p42a = doc.add_paragraph(
         "The backend is an Express.js application connected to MongoDB Atlas through Mongoose. Routes are partitioned by concern (auth, projects, "
         "ai, unsplash), and each protected route passes through the JWT authorization middleware before reaching its controller. Cross-origin access "
         "is managed with CORS, and a global error handler formats standardized JSON errors with appropriate HTTP status codes."
     )
-    doc.add_paragraph(
+    p42a.paragraph_format.line_spacing = 1.12; p42a.paragraph_format.space_after = Pt(2)
+    p42b = doc.add_paragraph(
         "The Gemini service layer (`server/routes/ai.js`) coordinates interaction with Google's Generative AI API. It structures prompt contracts, "
         "invokes `gemini-3-flash-preview` with `responseMimeType: 'application/json'`, parses returned schemas, and coordinates parallel Unsplash "
         "resolution before returning the hydrated deck to the client. Table 5 lists the core endpoints."
     )
+    p42b.paragraph_format.line_spacing = 1.12; p42b.paragraph_format.space_after = Pt(2)
 
     doc.add_page_break()
 
