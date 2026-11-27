@@ -485,14 +485,14 @@ def build_report():
     r_lt.bold = True; r_lt.font.size = Pt(11.5)
 
     tbls = [
-        ("Table 2.1: Comparative analysis of presentation platforms vs. PPT-GEN", "6"),
-        ("Table 3.1: User collection schema outline", "8"),
-        ("Table 3.2: Project collection schema outline", "8"),
-        ("Table 3.3: Technology stack used in PPT-GEN", "9"),
-        ("Table 4.1: PPT-GEN core RESTful API specification", "12"),
-        ("Table 4.2: Frontend pages and components", "12"),
-        ("Table 5.1: AI multimodal presentation generation benchmark", "14"),
-        ("Table 5.2: Functional verification scenarios", "16")
+        ("Table 1: Comparative analysis of presentation platforms vs. PPT-GEN", "6"),
+        ("Table 2: User collection schema outline", "8"),
+        ("Table 3: Project collection schema outline", "8"),
+        ("Table 4: Technology stack used in PPT-GEN", "9"),
+        ("Table 5: PPT-GEN core RESTful API specification", "12"),
+        ("Table 6: Frontend pages and components", "13"),
+        ("Table 7: AI multimodal presentation generation benchmark", "14"),
+        ("Table 8: Functional verification scenarios", "16")
     ]
     for name, pg in tbls:
         p_item = doc.add_paragraph()
@@ -685,7 +685,7 @@ def build_report():
 
     add_sec_head("2.2 Comparative Analysis of Existing Platforms")
     doc.add_paragraph(
-        "Table 2.1 compares PPT-GEN with three representative presentation platforms across architectural paradigm, authoring intake, "
+        "Table 1 compares PPT-GEN with three representative presentation platforms across architectural paradigm, authoring intake, "
         "AI engine, layout stability, and export capabilities."
     )
 
@@ -727,7 +727,7 @@ def build_report():
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0 or col_idx == 4: r.bold = True
 
-    add_caption("Table 2.1: Comparative analysis of existing presentation platforms vs. PPT-GEN")
+    add_caption("Table 1: Comparative analysis of existing presentation platforms vs. PPT-GEN")
 
     add_sec_head("2.3 Research Gaps Identified")
     doc.add_paragraph("From the literature review and comparative analysis, the following limitations were identified in existing platforms:")
@@ -781,7 +781,7 @@ def build_report():
     doc.add_paragraph(
         "PPT-GEN does not train a custom foundation model from scratch. It leverages the extensive pre-trained knowledge base of Google Gemini 3 Flash "
         "Preview to synthesize domain presentations, eliminating the need for private model training corpora. Application data is persisted across "
-        "two NoSQL collections in MongoDB Atlas. Table 3.1 and Table 3.2 outline the schema structures."
+        "two NoSQL collections in MongoDB Atlas. Table 2 and Table 3 outline the schema structures."
     )
 
     # Table 3.1: Users
@@ -812,7 +812,7 @@ def build_report():
             p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.15; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0: r.bold = True
-    add_caption("Table 3.1: User collection schema outline")
+    add_caption("Table 2: User collection schema outline")
 
     # Table 3.2: Projects
     t_32 = doc.add_table(rows=7, cols=4)
@@ -842,7 +842,7 @@ def build_report():
             p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.15; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0: r.bold = True
-    add_caption("Table 3.2: Project collection schema outline")
+    add_caption("Table 3: Project collection schema outline")
 
     doc.add_paragraph(
         "A compound index on (userId, updatedAt) supports the primary dashboard query, ensuring deck listings are served directly "
@@ -886,7 +886,7 @@ def build_report():
             p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.15; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0: r.bold = True
-    add_caption("Table 3.3: Technology stack used in PPT-GEN")
+    add_caption("Table 4: Technology stack used in PPT-GEN")
 
     add_sec_head("3.4 Algorithms / Techniques Implemented")
     add_subsec_head("Technique 1: Multimodal Prompt Engineering and Strict JSON Extraction")
@@ -967,7 +967,7 @@ def build_report():
     doc.add_paragraph(
         "The Gemini service layer (`server/routes/ai.js`) coordinates interaction with Google's Generative AI API. It structures prompt contracts, "
         "invokes `gemini-3-flash-preview` with `responseMimeType: 'application/json'`, parses returned schemas, and coordinates parallel Unsplash "
-        "resolution before returning the hydrated deck to the client. Table 4.1 lists the core endpoints."
+        "resolution before returning the hydrated deck to the client. Table 5 lists the core endpoints."
     )
 
     doc.add_page_break()
@@ -1005,7 +1005,7 @@ def build_report():
             p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.1; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0: r.bold = True
-    add_caption("Table 4.1: PPT-GEN core RESTful API specification")
+    add_caption("Table 5: PPT-GEN core RESTful API specification")
 
     add_sec_head("4.3 Frontend Implementation")
     doc.add_paragraph(
@@ -1023,8 +1023,8 @@ def build_report():
     # =========================================================================
     # PAGE 20 (Page 13): Table 4.2, Figure 4.2, 4.4 & 4.5
     # =========================================================================
-    print("Page 20 (Page 13): Table 4.2, Figure 4.2, 4.4 & 4.5...")
-    doc.add_paragraph("Table 4.2 summarizes the primary frontend modules, and Figure 4.2 illustrates the projects dashboard and Phase 4 fullscreen presenter mode.")
+    print("Page 20 (Page 13): Table 6, Figure 4.2, 4.4 & 4.5...")
+    doc.add_paragraph("Table 6 summarizes the primary frontend modules, and Figure 4.2 illustrates the projects dashboard and Phase 4 fullscreen presenter mode.")
 
     # Table 4.2: Frontend
     t_42 = doc.add_table(rows=6, cols=2)
@@ -1054,7 +1054,7 @@ def build_report():
             p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.05; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0: r.bold = True
-    add_caption("Table 4.2: Frontend pages and components")
+    add_caption("Table 6: Frontend pages and components")
 
     add_fig_image('extracted_assets/figures/fig_4_2.png', "Figure 4.2: Frontend suite: (a) Dashboard and (b) Presenter mode", width=Inches(5.4))
 
@@ -1098,7 +1098,7 @@ def build_report():
     r_eq.font.name = 'Times New Roman'; r_eq.font.size = Pt(10.5); r_eq.bold = True
 
     add_sec_head("5.2 Results Analysis")
-    doc.add_paragraph("Table 5.1 displays representative latency results, and Figure 5.2 compares SLA targets with actual generation times.")
+    doc.add_paragraph("Table 7 displays representative latency results, and Figure 5.1 compares SLA targets with actual generation times.")
 
     # Table 5.1
     t_51 = doc.add_table(rows=6, cols=5)
@@ -1128,7 +1128,7 @@ def build_report():
             p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.1; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0 or col_idx == 4: r.bold = True
-    add_caption("Table 5.1: AI multimodal presentation generation benchmark")
+    add_caption("Table 7: AI multimodal presentation generation benchmark")
 
     add_fig_image('extracted_assets/figures/fig_5_2.png', "Figure 5.1: Benchmark vs. actual generation latency across sample topics", width=Inches(4.4))
 
@@ -1200,7 +1200,7 @@ def build_report():
             p = c.paragraphs[0]; p.paragraph_format.line_spacing = 1.1; p.paragraph_format.space_after = Pt(1)
             r = p.add_run(val); r.font.name = 'Times New Roman'; r.font.size = Pt(8.5)
             if col_idx == 0: r.bold = True
-    add_caption("Table 5.2: Functional verification scenarios")
+    add_caption("Table 8: Functional verification scenarios")
 
     add_sec_head("5.5 Discussion")
     doc.add_paragraph(
